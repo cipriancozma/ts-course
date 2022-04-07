@@ -1,25 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {FC, createContext} from 'react'
 import './App.css';
+import Person from './components/Person';
 
-function App() {
+interface AppContextInterface {
+  name: string;
+  age: number;
+  country: string
+}
+const AppContext = createContext<AppContextInterface | null>(null);
+
+const App: FC = () => {
+
+  const name: string = "Ciprian"
+  const age: number = 20
+  const isMarried: boolean = true
+
+  const getName = (name: string): string => {
+      if(name === "Ciprian") {
+        return "Ciprian"
+      } else {
+        return "Something"
+      }
+  }
+
+  const contextValue: AppContextInterface = {
+    name: 'Ciprian',
+    age: 20,
+    country: "Sweden"
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContext.Provider value={contextValue}>
+      <div className="App">
+        Hello {name}. You are {age} years old. {isMarried ? "You are married" : "You are not married"}
+        <Person name="Andrei" age={20} email="some sort of mail" />
+      </div>
+    </AppContext.Provider>
   );
 }
 
